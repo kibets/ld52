@@ -192,4 +192,12 @@ public class Hero : MonoBehaviour
             _rig.AddForce(Vector3.up * JumpSpeed, ForceMode.Impulse);
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Apple") && collision.gameObject.TryGetComponent<Apple>(out var apple))
+        {
+            Destroy(apple.gameObject);
+        }
+    }
 }
