@@ -10,19 +10,25 @@ public class Bow : MonoBehaviour
     [SerializeField] private float bowForceBase;
     [SerializeField] private float bowForceSpring;
     [SerializeField] private float springTime;
-
+    [SerializeField] private float reloadingTime;
+    
     [SerializeField] private ParticleSystem bowChargeFx;
     
     private bool _arming;
     private bool _armedMax;
 
     private float _springTimer;
-
+    private float _reloadingTimer;
 
     private Arrow _arrow;
     
     private void Update()
     {
+        if (_reloadingTimer > 0)
+        {
+            _reloadingTimer -= Time.deltaTime;
+        }
+        
         if (_arming)
         {
             _springTimer += Time.deltaTime;
@@ -44,6 +50,11 @@ public class Bow : MonoBehaviour
 
     public Vector3 HoldTrigger()
     {
+        if (_reloadingTimer > 0)
+        {
+            return Vector3.zero;
+        }
+        
         if (!_arming)
         {
             LoadArrow();
@@ -92,6 +103,8 @@ public class Bow : MonoBehaviour
             _springTimer = 0;
             _arming = false;
             _armedMax = false;
+
+            _reloadingTimer = reloadingTime;
         }
     }
 

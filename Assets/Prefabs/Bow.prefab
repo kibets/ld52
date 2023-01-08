@@ -248,7 +248,8 @@ MonoBehaviour:
   muzzle: {fileID: 7144884917578703284}
   bowForceBase: 5
   bowForceSpring: 30
-  springTime: 0.7
+  springTime: 0.6
+  reloadingTime: 0.2
   bowChargeFx: {fileID: 2864158132421095916}
 --- !u!1001 &3933206646053198113
 PrefabInstance:

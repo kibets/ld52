@@ -66,7 +66,14 @@ public class Hero : MonoBehaviour
         {
             var springPos = bow.HoldTrigger();
 
-            leftArm.transform.localPosition = springPos + Vector3.right * 0.2f;
+            if (springPos == Vector3.zero)
+            {
+                leftArm.transform.localPosition = Vector3.zero;
+            }
+            else
+            {
+                leftArm.transform.localPosition = springPos + Vector3.right * 0.2f;
+            }
         }
         else
         {
