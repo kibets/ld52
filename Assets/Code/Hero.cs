@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class Hero : MonoBehaviour
@@ -13,6 +14,11 @@ public class Hero : MonoBehaviour
     [SerializeField] private Bow bow;
 
     [SerializeField] private Transform leftArm;
+
+    [SerializeField] private Transform legLeft;
+    [SerializeField] private Transform legRight;
+
+    [SerializeField] private Transform artGroup;
     
     private Rigidbody _rig;
 
@@ -25,6 +31,8 @@ public class Hero : MonoBehaviour
 
     private float _jumpTimer;
     private bool _doJump;
+    private bool _animMoving;
+    private bool _lookingRight;
 
     private void Awake()
     {
@@ -57,6 +65,46 @@ public class Hero : MonoBehaviour
                 _jumpTimer = JumpCooldown;
                 _doJump = true;
             }
+        }
+
+        UpdateLocomotion();
+    }
+
+    private void UpdateLocomotion()
+    {
+        const float VelocityTrigger = 1f;
+        var angle = 25;
+        
+        if (_grounded && _rig.velocity.magnitude > VelocityTrigger && !_animMoving)
+        {
+            _animMoving = true;
+            legLeft.DOKill();
+            legRight.DOKill();
+
+
+            legLeft.localPosition = new Vector3(legLeft.localPosition.x, 0f, 0f);
+            legRight.localPosition = new Vector3(legRight.localPosition.x, 0f, 0f);
+            
+            legLeft.localRotation = Quaternion.Euler(0, 0, -angle);
+            legRight.localRotation = Quaternion.Euler(0, 0, -angle);
+            
+            legLeft.DOLocalRotate(new Vector3(0, 0, angle), 0.23f).SetLoops(-1, LoopType.Yoyo).SetDelay(0.23f);
+            legRight.DOLocalRotate(new Vector3(0, 0, angle), 0.23f).SetLoops(-1, LoopType.Yoyo);
+            
+            legLeft.DOLocalMoveY(0.5f,0.23f).SetLoops(-1, LoopType.Yoyo).SetDelay(0.23f);
+            legRight.DOLocalMoveY(0.5f, 0.23f).SetLoops(-1, LoopType.Yoyo);
+        }
+        else if (_animMoving && (_rig.velocity.magnitude <= VelocityTrigger || !_grounded))
+        {
+            _animMoving = false;
+            legLeft.DOKill();
+            legRight.DOKill();
+
+            legLeft.DOLocalRotate(Vector3.zero, 0.13f);
+            legRight.DOLocalRotate(Vector3.zero, 0.13f);
+
+            legLeft.DOLocalMoveY(0, 0.13f);
+            legRight.DOLocalMoveY(0, 0.13f);
         }
     }
 
@@ -91,6 +139,24 @@ public class Hero : MonoBehaviour
         var angleDeg = (180 / Mathf.PI) * angleRad;
 
         arm.rotation = Quaternion.Euler(0, 0, angleDeg);
+
+        var shouldLookRight = Mathf.Abs(angleDeg) <= 90;
+
+        if (shouldLookRight && !_lookingRight)
+        {
+            _lookingRight = true;
+            
+            artGroup.DOKill();
+            artGroup.DOScaleX(1f, 0.13f);
+        }
+
+        if (!shouldLookRight && _lookingRight)
+        {
+            _lookingRight = false;
+
+            artGroup.DOKill();
+            artGroup.DOScaleX(-1f, 0.13f);
+        }
     }
 
     private void UpdateGroundCheck()
