@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class MousePointer : Singleton<MousePointer>
 {
+    [SerializeField] private ParticleSystem bowMaxChargeFx;
+    
     private int _mask;
     private Camera _camera;
     
@@ -26,5 +28,10 @@ public class MousePointer : Singleton<MousePointer>
         {
             transform.position = hit.point;
         }
+    }
+
+    public void PlayBowMaxCharge()
+    {
+        bowMaxChargeFx.Play();
     }
 }

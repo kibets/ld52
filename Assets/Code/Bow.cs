@@ -10,8 +10,11 @@ public class Bow : MonoBehaviour
     [SerializeField] private float bowForceBase;
     [SerializeField] private float bowForceSpring;
     [SerializeField] private float springTime;
+
+    [SerializeField] private ParticleSystem bowChargeFx;
     
     private bool _arming;
+    private bool _armedMax;
 
     private float _springTimer;
 
@@ -24,7 +27,18 @@ public class Bow : MonoBehaviour
         {
             _springTimer += Time.deltaTime;
 
-            if (_springTimer > springTime) _springTimer = springTime;
+            if (_springTimer > springTime)
+            {
+                _springTimer = springTime;
+
+                if (!_armedMax)
+                {
+                    _armedMax = true;
+                    bowChargeFx.Play();
+
+                    // MousePointer.Instance.PlayBowMaxCharge();
+                }
+            }
         }
     }
 
@@ -58,7 +72,6 @@ public class Bow : MonoBehaviour
     {
         if (_arming)
         {
-            _arming = false;
             Destroy(_arrow.gameObject);
 
             var arrow = Prefabs.Instance.Produce<Arrow>();
@@ -71,6 +84,8 @@ public class Bow : MonoBehaviour
             arrow.ShootForward(bowForceBase + bowForceSpring * springMod);
             
             _springTimer = 0;
+            _arming = false;
+            _armedMax = false;
         }
     }
 

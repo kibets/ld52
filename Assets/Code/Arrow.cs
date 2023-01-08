@@ -13,6 +13,8 @@ public class Arrow : MonoBehaviour
     private bool _sticked;
     public float Length => 1.5f;
 
+    private bool _touchedFloor;
+
     private void Awake()
     {
         _rig = GetComponent<Rigidbody>();
