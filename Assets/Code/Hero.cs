@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 
-public class Hero : MonoBehaviour
+public class Hero : Singleton<Hero>
 {
     [SerializeField] public float Speed;
     [SerializeField] public float JumpSpeed;
