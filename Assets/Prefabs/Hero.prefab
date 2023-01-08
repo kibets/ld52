@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 899716884242687140}
   - component: {fileID: 899716884242687141}
   - component: {fileID: 899716884242687066}
-  m_Layer: 0
+  - component: {fileID: 8927308110099591999}
+  m_Layer: 9
   m_Name: Hero
-  m_TagString: Untagged
+  m_TagString: Hero
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49,7 +50,7 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!54 &899716884242687141
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -59,13 +60,13 @@ Rigidbody:
   m_GameObject: {fileID: 899716884242687068}
   serializedVersion: 2
   m_Mass: 10
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 120
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &899716884242687066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,9 +79,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0709ca778906d34f852337661dabf7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 40
+  Speed: 25
+  JumpSpeed: 250
+  GravityForce: 30
   arm: {fileID: 1531810454517127625}
   bow: {fileID: 2511056568522369835}
+--- !u!136 &8927308110099591999
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 899716884242687068}
+  m_Material: {fileID: 13400000, guid: 390b0bc99539fdc4d875ea3d794092eb, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.6
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.1, z: 0}
 --- !u!1 &926071239141799403
 GameObject:
   m_ObjectHideFlags: 0
@@ -105,7 +122,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 926071239141799403}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.6, z: 0}
+  m_LocalPosition: {x: 0, y: 1.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -220,7 +237,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2306433456290316141}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

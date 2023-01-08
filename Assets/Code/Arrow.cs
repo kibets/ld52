@@ -39,6 +39,13 @@ public class Arrow : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         _collided = true;
+
+        if (collision.collider.CompareTag("Floor") && !_touchedFloor && !_sticked)
+        {
+            _touchedFloor = true;
+            
+            Destroy(gameObject, 3f);
+        }
     }
 
     public void StickTo(Rigidbody target)

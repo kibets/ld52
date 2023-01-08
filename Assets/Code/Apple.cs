@@ -79,12 +79,20 @@ public class Apple : MonoBehaviour
     private IEnumerator DoBlinkRoutine()
     {
         var renderers = GetComponentsInChildren<MeshRenderer>();
-        
+
         for (int i = 0; i < 20; i++)
         {
-            foreach (var rend in renderers) {rend.enabled = false;}
+            foreach (var rend in renderers)
+            {
+                if(rend != null) rend.enabled = false;
+            }
             yield return new WaitForSeconds(0.07f);
-            foreach (var rend in renderers) rend.enabled = true;
+            
+            foreach (var rend in renderers)
+                if (rend != null)
+                {
+                    rend.enabled = true;
+                }
             yield return new WaitForSeconds(0.07f);
         }
         Destroy(gameObject);

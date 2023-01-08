@@ -52,6 +52,7 @@ public class TreeBranch : MonoBehaviour
             var appleJoint = Prefabs.Instance.Produce<AppleJoint>();
 
             appleJoint.transform.SetParentZero(socket);
+            appleJoint.transform.rotation = Quaternion.identity;
         }
     }
 }
