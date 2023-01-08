@@ -197,7 +197,14 @@ public class Hero : Singleton<Hero>
     {
         if (collision.gameObject.CompareTag("Apple") && collision.gameObject.TryGetComponent<Apple>(out var apple))
         {
-            Destroy(apple.gameObject);
+            if (!apple.Collected)
+            {
+                Progress.Instance.CollectApple(apple);
+                LevelUI.Instance.UpdateUI();
+
+                apple.Collect();
+            }
+            
         }
     }
 }

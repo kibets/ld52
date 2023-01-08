@@ -24,7 +24,7 @@ public class Apple : MonoBehaviour
     
     [SerializeField] private float floorTime;
     
-    
+    public bool Collected { get; set; }
     
     private Rigidbody _rig;
 
@@ -40,6 +40,7 @@ public class Apple : MonoBehaviour
     
     private float _floorTimer;
     private Coroutine _blinkRoutine;
+    public string AppleType { get; set; }
 
     private void Awake()
     {
@@ -54,6 +55,8 @@ public class Apple : MonoBehaviour
         ripeArt.localScale = Vector3.one * 0.1f;
         redArt.localScale = Vector3.one * 0.1f;
         mainCollider.radius = greenColliderRad;
+        
+        AppleType = "green";
     }
 
     private void Update()
@@ -131,6 +134,8 @@ public class Apple : MonoBehaviour
             redArt.DOScale(1f, 0.17f);
             greenArt.DOScale(0.1f, 0.17f);
             mainCollider.radius = redColliderRad;
+
+            AppleType = "red";
         }
 
         if (_ripenTimer > greenTime + redTime && !_stageBad)
@@ -141,6 +146,8 @@ public class Apple : MonoBehaviour
             redArt.DOScale(0.1f, 0.17f);
             greenArt.DOScale(0.1f, 0.17f);
             mainCollider.radius = ripeColliderRad;
+            
+            AppleType = "orange";
         }
 
         if (_ripenTimer > greenTime + redTime + ripeTime)
@@ -179,5 +186,11 @@ public class Apple : MonoBehaviour
             }
             
         }
+    }
+
+    public void Collect()
+    {
+        Collected = true;
+        Destroy(gameObject);
     }
 }
