@@ -12,13 +12,20 @@ public class Arrow : MonoBehaviour
     private bool _collided;
     private bool _sticked;
     public float Length => 1.5f;
+    public bool Reflected => _reflectedTimer >= 0;
 
     private bool _touchedFloor;
+    private float _reflectedTimer;
 
     private void Awake()
     {
         _rig = GetComponent<Rigidbody>();
         _colliders = GetComponentsInChildren<Collider>().ToList();
+    }
+
+    private void Update()
+    {
+        _reflectedTimer -= Time.deltaTime;
     }
 
     private void FixedUpdate()
@@ -74,5 +81,14 @@ public class Arrow : MonoBehaviour
         }
 
         _rig.isKinematic = true;
+    }
+
+    public void Reflect()
+    {
+        if (_rig != null)
+        {
+            _reflectedTimer = 1f;
+            _rig.velocity = Vector3.zero;
+        }
     }
 }

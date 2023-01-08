@@ -9,6 +9,7 @@ TagManager:
   - ArrowTip
   - Floor
   - Hero
+  - ArrowReflector
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Arrow
   - Floor
   - Hero
-  - 
+  - ArrowReflector
   - 
   - 
   - 

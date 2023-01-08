@@ -42,7 +42,7 @@ public class Bow : MonoBehaviour
         }
     }
 
-    public void HoldTrigger()
+    public Vector3 HoldTrigger()
     {
         if (!_arming)
         {
@@ -52,8 +52,14 @@ public class Bow : MonoBehaviour
         if (_arming)
         {
             var springMod = _springTimer / springTime;
-            _arrow.transform.localPosition = new Vector3(-springMod * _arrow.Length * 0.5f, 0, 0);
+            var springPos = new Vector3(-springMod * _arrow.Length * 0.5f, 0, 0);
+
+            _arrow.transform.localPosition = springPos;
+
+            return springPos;
         }
+        
+        return Vector3.zero;
     }
 
     private void LoadArrow()

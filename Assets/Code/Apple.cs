@@ -24,6 +24,8 @@ public class Apple : MonoBehaviour
     
     [SerializeField] private float floorTime;
     
+    
+    
     private Rigidbody _rig;
 
     private float _ripenTimer;
@@ -161,19 +163,21 @@ public class Apple : MonoBehaviour
         
         if (collision.collider.CompareTag("ArrowTip") && collision.gameObject.TryGetComponent<Arrow>(out var arrow))
         {
-            if (collision.contactCount > 0)
+            if (collision.contactCount > 0 && !arrow.Reflected)
             {
+                
                 var point = collision.GetContact(0);
 
                 var effect = Prefabs.Instance.Produce("AppleHitFx");
                 effect.transform.SetParent(transform);
                 effect.transform.position = point.point;
                 effect.transform.rotation = arrow.transform.rotation;
+            
+                _damaged = true;
+                    
+                arrow.StickTo(_rig);
             }
             
-            _damaged = true;
-            
-            arrow.StickTo(_rig);
         }
     }
 }

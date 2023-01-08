@@ -49,7 +49,18 @@ public class TreeBranch : MonoBehaviour
 
         if (socket != null)
         {
-            var appleJoint = Prefabs.Instance.Produce<AppleJoint>();
+            string variant;
+            if (Random.value > 0.3)
+            {
+                variant = "AppleJoint";
+            }
+            else
+            {
+                variant = "AppleJointRock";
+                // variant = Random.value > 0.5 ? "AppleJointRock" : "AppleJointSpikes";
+            }
+
+            var appleJoint = Prefabs.Instance.Produce<AppleJoint>(variant);
 
             appleJoint.transform.SetParentZero(socket);
             appleJoint.transform.rotation = Quaternion.identity;

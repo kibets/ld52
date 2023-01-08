@@ -11,6 +11,8 @@ public class Hero : MonoBehaviour
 
     [SerializeField] private Transform arm;
     [SerializeField] private Bow bow;
+
+    [SerializeField] private Transform leftArm;
     
     private Rigidbody _rig;
 
@@ -62,11 +64,15 @@ public class Hero : MonoBehaviour
     {
         if (Input.GetButton("Fire1"))
         {
-            bow.HoldTrigger();
+            var springPos = bow.HoldTrigger();
+
+            leftArm.transform.localPosition = springPos + Vector3.right * 0.2f;
         }
         else
         {
             bow.ReleaseTrigger();
+            
+            leftArm.transform.localPosition = Vector3.zero;
         }
     }
 
