@@ -340,8 +340,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6945791104919289261}
   - component: {fileID: 6945791104919289260}
-  - component: {fileID: 5900443678850271052}
   - component: {fileID: 5975063578513438977}
+  - component: {fileID: 8262414947551693639}
   m_Layer: 7
   m_Name: Arrow
   m_TagString: ArrowTip
@@ -382,19 +382,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 56
   m_CollisionDetection: 0
---- !u!65 &5900443678850271052
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6945791104919289257}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.1, z: 0.1}
-  m_Center: {x: 1.1, y: 0, z: 0}
 --- !u!114 &5975063578513438977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,6 +394,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 051a0bce273ecf3448179ef8e866d6a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!135 &8262414947551693639
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6945791104919289257}
+  m_Material: {fileID: 13400000, guid: 390b0bc99539fdc4d875ea3d794092eb, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.05
+  m_Center: {x: 1.1, y: 0, z: 0}
 --- !u!1 &7354980733876625254
 GameObject:
   m_ObjectHideFlags: 0

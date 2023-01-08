@@ -1,18 +1,22 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
     private Rigidbody _rig;
+    private List<Collider> _colliders;
 
     private bool _collided;
     private bool _sticked;
-    
+    public float Length => 1.5f;
+
     private void Awake()
     {
         _rig = GetComponent<Rigidbody>();
+        _colliders = GetComponentsInChildren<Collider>().ToList();
     }
 
     private void FixedUpdate()
@@ -35,13 +39,14 @@ public class Arrow : MonoBehaviour
         _collided = true;
     }
 
-    public void StickTo(Transform target)
+    public void StickTo(Rigidbody target)
     {
         _collided = true;
         _sticked = true;
         
+        target.AddForce(_rig.velocity, ForceMode.Impulse);
+        
         Destroy(_rig);
-
 
         var dir = target.position - transform.position;
 
@@ -49,6 +54,16 @@ public class Arrow : MonoBehaviour
         
         transform.position += transform.right * 0.3f;
 
-        transform.SetParent(target);
+        transform.SetParent(target.transform);
+    }
+
+    public void DisableColliders()
+    {
+        foreach (var col in _colliders)
+        {
+            col.enabled = false;
+        }
+
+        _rig.isKinematic = true;
     }
 }
