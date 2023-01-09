@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Hero : Singleton<Hero>
@@ -10,7 +11,8 @@ public class Hero : Singleton<Hero>
     [SerializeField] public float Speed;
     [SerializeField] public float JumpSpeed;
     [SerializeField] public float GravityForce;
-
+    [SerializeField] public int Health;
+    
     [SerializeField] private Transform arm;
     [SerializeField] private Bow bow;
 
@@ -22,7 +24,10 @@ public class Hero : Singleton<Hero>
     [SerializeField] private Transform artGroup;
 
     [SerializeField] private Transform keyHolder;
-    
+
+    [SerializeField] private List<Transform> gibs;
+    [SerializeField] private List<Collider> mainColliders;
+
     private Rigidbody _rig;
 
     private Vector3 _movement;
@@ -37,6 +42,7 @@ public class Hero : Singleton<Hero>
     private bool _animMoving;
     private bool _lookingRight;
     private bool _blinking;
+    private bool _dead;
 
     public Key Key { get; private set; }
     public bool ShootingDisabled { get; set; }
@@ -50,7 +56,8 @@ public class Hero : Singleton<Hero>
 
     void Update()
     {
-
+        if (_dead) return;
+        
         UpdateFireInput();
 
         UpdateMovement();
@@ -188,6 +195,8 @@ public class Hero : Singleton<Hero>
     
     private void FixedUpdate()
     {
+        if (_dead) return;
+
         _rig.AddForce(_movement * (Speed * Time.fixedDeltaTime), ForceMode.VelocityChange);
 
         if (!_grounded)
@@ -204,6 +213,8 @@ public class Hero : Singleton<Hero>
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (_dead) return;
+
         if (collision.gameObject.CompareTag("Apple") && collision.gameObject.TryGetComponent<Apple>(out var apple))
         {
             if (!apple.Collected)
@@ -229,17 +240,25 @@ public class Hero : Singleton<Hero>
 
     public void Bite()
     {
+        if (_dead) return;
         if (_blinking) return;
+        _blinking = true;
 
-        StartCoroutine(BlinkRoutine());
+        Health -= 1;
 
-        // transform.DOScale(Vector3.one * 0.1f, 0.23f);
+        if (Health <= 0)
+        {
+            _dead = true;
+            StartCoroutine(DieRoutine());
+        }
+        else
+        {
+            StartCoroutine(BlinkRoutine());
+        }
     }
-    
+
     private IEnumerator BlinkRoutine()
     {
-        _blinking = true;
-        
         var renderers = GetComponentsInChildren<MeshRenderer>();
 
         for (int i = 0; i < 14; i++)
@@ -259,5 +278,30 @@ public class Hero : Singleton<Hero>
         }
 
         _blinking = false;
+    }
+    
+    private IEnumerator DieRoutine()
+    {
+        _rig.isKinematic = true;
+        
+        foreach (var cldr in mainColliders)
+        {
+            cldr.enabled = false;
+        }
+        
+        legLeft.DOKill();
+        legRight.DOKill();
+        
+        foreach (var gib in gibs)
+        {
+            gib.DOKill();
+            gib.AddComponent<BoxCollider>();
+            var rig = gib.AddComponent<Rigidbody>();
+            rig.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
+            
+            gib.SetParent(null);
+        }
+
+        yield return new WaitForSeconds(3f);
     }
 }
