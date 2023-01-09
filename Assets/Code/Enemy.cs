@@ -7,7 +7,8 @@ using UnityEngine;
 public enum EnemyState
 {
     Idle,
-    Agro
+    Agro,
+    BiteCooldown
 }
 
 public class Enemy : MonoBehaviour
@@ -19,6 +20,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] public float AgroRadius;
     [SerializeField] public float DeAgroRadius;
 
+    private float BiteCooldownTime = 1.7f;
+    
     private Rigidbody _rig;
 
     private bool _dead;
@@ -29,6 +32,10 @@ public class Enemy : MonoBehaviour
     private Vector3 _heroPos;
     private float _targetDist;
     private Vector3 _targetDir;
+
+    private float _biteTimer;
+
+    private List<Transform> _arrows = new();
     
     private void Awake()
     {
@@ -54,8 +61,16 @@ public class Enemy : MonoBehaviour
         
         if (_state == EnemyState.Idle) FixedIdle();
         if (_state == EnemyState.Agro) FixedAgro();
+        if (_state == EnemyState.BiteCooldown) FixedBiteCooldown();
     }
-    
+
+    private void FixedBiteCooldown()
+    {
+        _biteTimer -= Time.fixedDeltaTime;
+
+        if (_biteTimer <= 0) _state = EnemyState.Idle;
+    }
+
     private void FixedIdle()
     {
         if (_targetDist < AgroRadius) _state = EnemyState.Agro;
@@ -83,6 +98,8 @@ public class Enemy : MonoBehaviour
             
                 arrow.StickTo(_rig);
 
+                _arrows.Add(arrow.transform);
+                
                 Health -= 1;
 
                 if (Health <= 0)
@@ -90,6 +107,14 @@ public class Enemy : MonoBehaviour
                     Die();
                 }
             }
+        }
+        
+        if (collision.gameObject.CompareTag("Hero") && collision.gameObject.TryGetComponent<Hero>(out var hero))
+        {
+            _state = EnemyState.BiteCooldown;
+            _biteTimer = BiteCooldownTime;
+
+            hero.Bite();
         }
     }
 
@@ -102,11 +127,20 @@ public class Enemy : MonoBehaviour
         _rig.useGravity = true;
         _rig.drag = 0.1f;
         
-        var mat = GetComponentInChildren<MeshRenderer>().materials[0];
-        mat.DOColor(Color.gray, "_EmissionColor", 0.34f);
-        mat.DOColor(Color.gray, "_BaseColor", 0.34f);
-        mat.DOColor(Color.gray, "_Color", 0.34f);
 
-        transform.DOScale(Vector3.one * 0.1f, 0.35f).OnComplete(() => Destroy(gameObject)).SetDelay(2.5f);
+        var fractured = Prefabs.Instance.Produce<FracturedSphere>();
+        fractured.transform.position = transform.position;
+        
+        fractured.Setup(_rig.velocity);
+
+        foreach (var oldArrow in _arrows)
+        {
+            var arrow = Prefabs.Instance.Produce<Arrow>();
+            arrow.transform.SetPositionAndRotation(oldArrow.position, oldArrow.rotation);
+            arrow.Discharge();
+        }
+        
+        Destroy(gameObject);
+        
     }
 }

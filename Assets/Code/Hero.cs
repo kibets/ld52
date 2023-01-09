@@ -212,7 +212,6 @@ public class Hero : Singleton<Hero>
 
                 apple.Collect();
             }
-            
         }
     }
 
@@ -225,6 +224,10 @@ public class Hero : Singleton<Hero>
 
         Key.transform.DOLocalMove(Vector3.zero, 1.13f);
     }
-    
 
+
+    public void Bite()
+    {
+        // transform.DOScale(Vector3.one * 0.1f, 0.23f);
+    }
 }

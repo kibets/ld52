@@ -62,7 +62,7 @@ public class Arrow : MonoBehaviour
         _sticked = true;
         
         target.AddForce(_rig.velocity, ForceMode.Impulse);
-        
+
         Destroy(_rig);
         
         foreach (var col in _colliders)
@@ -101,5 +101,14 @@ public class Arrow : MonoBehaviour
             _reflectedTimer = 1f;
             _rig.velocity = Vector3.zero;
         }
+    }
+
+    public void Discharge()
+    {
+        _collided = true;
+        _touchedFloor = true;
+        _rig.collisionDetectionMode = CollisionDetectionMode.Discrete;
+            
+        Destroy(gameObject, 3f);
     }
 }
