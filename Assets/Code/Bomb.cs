@@ -24,6 +24,8 @@ public class Bomb : MonoBehaviour
         exp.transform.position = transform.position;
         exp.Setup(4f);
         
+        Sounds.Instance.PlayRandom(transform.position, "stomp_b");
+        
         Destroy(gameObject);
     }
 }

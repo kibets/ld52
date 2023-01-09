@@ -234,6 +234,8 @@ public class Hero : Singleton<Hero>
                 }
                 
                 apple.Collect();
+                
+                Sounds.Instance.PlayExact("snap_b_1");
             }
         }
     }

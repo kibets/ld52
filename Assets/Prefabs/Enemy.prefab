@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c79b96f34654654bbe65d283debf123, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 30
+  Speed: 25
   Health: 2
   ImpulseThreshold: 10
   AgroRadius: 40

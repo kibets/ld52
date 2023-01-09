@@ -199,11 +199,19 @@ public class Apple : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (_expired) return;
-        
-        if (Checks.IsGround(collision.collider) && !_touchedFloor)
+
+        if (Checks.IsGround(collision.collider))
         {
-            _touchedFloor = true;
-            _floorTimer = floorTime;
+            if (!_touchedFloor)
+            {
+                _touchedFloor = true;
+                _floorTimer = floorTime;
+                
+                if(collision.impulse.magnitude > 5f)
+                {
+                    Sounds.Instance.PlayRandom(transform.position, "stomp_a");
+                }
+            }
         }
         
         if (collision.collider.CompareTag("ArrowTip") && collision.gameObject.TryGetComponent<Arrow>(out var arrow))
@@ -216,7 +224,7 @@ public class Apple : MonoBehaviour
                 effect.transform.SetParent(transform);
                 effect.transform.position = point.point;
                 effect.transform.rotation = arrow.transform.rotation;
-            
+                
                 _damaged = true;
                     
                 arrow.StickTo(_rig);
@@ -227,6 +235,8 @@ public class Apple : MonoBehaviour
                 {
                     //
                 }
+                
+                Sounds.Instance.PlayRandom(transform.position, "hit_a");
             }
             
         }

@@ -128,6 +128,8 @@ public class Trader : Singleton<Trader>
                 arrow.StickTo(_rig, 0f);
                 arrow.ShrinkDestroy(15f);
                 Yell(yellWords.PickRandom());
+                
+                Sounds.Instance.PlayRandom(transform.position,"merchant_hit");
             }
         }
     }

@@ -111,6 +111,10 @@ public class Enemy : MonoBehaviour
                 {
                     Die();
                 }
+                else
+                {
+                    Sounds.Instance.PlayRandom(transform.position, "hit_a");
+                }
             }
         }
         
@@ -149,6 +153,8 @@ public class Enemy : MonoBehaviour
         var core = Prefabs.Instance.Produce("ApplePurple");
         core.transform.position = transform.position;
         
+        
+        Sounds.Instance.PlayExact("snap_a_1");
         
         Destroy(gameObject);
         

@@ -45,6 +45,8 @@ public class Bow : MonoBehaviour
                 {
                     _armedMax = true;
                     bowChargeFx.Play();
+                    
+                    Sounds.Instance.PlayRandom(transform.position, "bow_pull");
 
                     // MousePointer.Instance.PlayBowMaxCharge();
                 }
@@ -121,6 +123,8 @@ public class Bow : MonoBehaviour
             var springMod = _springTimer / springTime;
             
             arrow.ShootForward(bowForceBase + bowForceSpring * springMod);
+            
+            Sounds.Instance.PlayRandom(transform.position, "bow_shot");
             
             _springTimer = 0;
             _arming = false;
