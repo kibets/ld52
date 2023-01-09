@@ -280,16 +280,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentJoint: {fileID: 0}
   mainCollider: {fileID: 8955307643257951942}
-  greenArt: {fileID: 5357789858281517986}
-  redArt: {fileID: 6134919819262814839}
-  ripeArt: {fileID: 3309864160690130061}
-  greenTime: 5
-  redTime: 2
-  ripeTime: 2
-  greenColliderRad: 0.3
-  redColliderRad: 0.5
-  ripeColliderRad: 0.5
   floorTime: 6
+  stages:
+  - Name: purple
+    Art: {fileID: 5357789858281517986}
+    Duration: 5
+    ColliderRadius: 0.3
+  - Name: purple
+    Art: {fileID: 6134919819262814839}
+    Duration: 2
+    ColliderRadius: 0.5
+  - Name: purple
+    Art: {fileID: 3309864160690130061}
+    Duration: 2
+    ColliderRadius: 0.5
 --- !u!114 &51705951448382990
 MonoBehaviour:
   m_ObjectHideFlags: 0

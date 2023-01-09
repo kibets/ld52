@@ -59,12 +59,12 @@ public class Progress : Singleton<Progress>
     
     public void CollectApple(Apple apple)
     {
-        if (!ApplesCollected.ContainsKey(apple.AppleAge))
+        if (!ApplesCollected.ContainsKey(apple.Stage.Name))
         {
-            ApplesCollected.Add(apple.AppleAge, 0);
+            ApplesCollected.Add(apple.Stage.Name, 0);
         }
 
-        ApplesCollected[apple.AppleAge] += 1;
+        ApplesCollected[apple.Stage.Name] += 1;
     }
 
     public int GetCollected(string key)

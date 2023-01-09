@@ -554,16 +554,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentJoint: {fileID: 0}
   mainCollider: {fileID: 744832638762333890}
-  greenArt: {fileID: 4344628874412282790}
-  redArt: {fileID: 2536112210218404467}
-  ripeArt: {fileID: 6629147361007103113}
-  greenTime: 5
-  redTime: 5
-  ripeTime: 5
-  greenColliderRad: 0.3
-  redColliderRad: 0.5
-  ripeColliderRad: 0.5
   floorTime: 6
+  stages:
+  - Name: green
+    Art: {fileID: 4344628874412282790}
+    Duration: 5
+    ColliderRadius: 0.3
+  - Name: red
+    Art: {fileID: 2536112210218404467}
+    Duration: 5
+    ColliderRadius: 0.5
+  - Name: orange
+    Art: {fileID: 6629147361007103113}
+    Duration: 5
+    ColliderRadius: 0.5
 --- !u!1 &7490256081961125431
 GameObject:
   m_ObjectHideFlags: 0

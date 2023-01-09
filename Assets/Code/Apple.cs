@@ -5,36 +5,35 @@ using DG.Tweening;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+[Serializable]
+public class AppleStage
+{
+    public string Name;
+    public Transform Art;
+    public float Duration;
+    public float ColliderRadius;
+}
+
 public class Apple : MonoBehaviour
 {
     [SerializeField] private AppleJoint parentJoint;
     [SerializeField] private SphereCollider mainCollider;
-    
-    [SerializeField] private Transform greenArt;
-    [SerializeField] private Transform redArt;
-    [SerializeField] private Transform ripeArt;
-    
-    [SerializeField] private float greenTime;
-    [SerializeField] private float redTime;
-    [SerializeField] private float ripeTime;
 
-    [SerializeField] private float greenColliderRad;
-    [SerializeField] private float redColliderRad;
-    [SerializeField] private float ripeColliderRad;
-    
     [SerializeField] private float floorTime;
 
-    public event Action<string> OnAgeChanged;
+    [SerializeField] private List<AppleStage> stages;
+
+    private AppleStage _stage;
+    private int _stageIndex;
+    
+    public event Action<AppleStage> OnStageChanged;
     public event Action OnExpired;
     
     public bool Collected { get; set; }
     
     private Rigidbody _rig;
 
-    private float _ripenTimer;
-
-    private bool _stageRed;
-    private bool _stageBad;
+    private float _stageTimer;
 
     private bool _damaged;
     private bool _jointBreak;
@@ -43,23 +42,32 @@ public class Apple : MonoBehaviour
     
     private float _floorTimer;
     private Coroutine _blinkRoutine;
-    public string AppleAge { get; set; }
+    private bool _expired;
 
+    public AppleStage Stage => _stage;
+
+    private int _hits;
+    
     private void Awake()
     {
-        greenTime += greenTime * Random.value * 0.2f;
-        redTime += redTime * Random.value * 0.2f;
+        _stage = stages[0];
+
+        foreach (var stage in stages)
+        {
+            stage.Duration += stage.Duration * Random.value * 0.2f;
+        }
         
         _rig = GetComponent<Rigidbody>();
     }
 
     private void Start()
     {
-        ripeArt.localScale = Vector3.one * 0.1f;
-        redArt.localScale = Vector3.one * 0.1f;
-        mainCollider.radius = greenColliderRad;
-        
-        AppleAge = "green";
+        foreach (var stage in stages)
+        {
+            stage.Art.localScale = Vector3.one * 0.1f;
+        }
+
+        SelectStage(_stage);
     }
 
     private void Update()
@@ -127,52 +135,53 @@ public class Apple : MonoBehaviour
     
     private void UpdateRipeProcess()
     {
-        if (_jointBreak || _damaged) return;
+        if (_jointBreak || _damaged || _expired) return;
         
-        _ripenTimer += Time.deltaTime * Progress.Instance.AppleRipeSpeedMod;
-
-        if (_ripenTimer > greenTime && !_stageRed)
+        _stageTimer += Time.deltaTime * Progress.Instance.AppleRipeSpeedMod;
+        
+        if (_stageTimer > _stage.Duration)
         {
-            _stageRed = true;
-            redArt.DOScale(1f, 0.17f);
-            greenArt.DOScale(0.1f, 0.17f);
-            mainCollider.radius = redColliderRad;
+            _stageTimer = 0;
 
-            SetAging("red");
-        }
+            _stage.Art.DOScale(0.1f, 0.17f);
 
-        if (_ripenTimer > greenTime + redTime && !_stageBad)
-        {
-            _stageBad = true;
-            
-            ripeArt.DOScale(1f, 0.17f);
-            redArt.DOScale(0.1f, 0.17f);
-            greenArt.DOScale(0.1f, 0.17f);
-            mainCollider.radius = ripeColliderRad;
+            _stageIndex += 1;
 
-            SetAging("orange");
-        }
-
-        if (_ripenTimer > greenTime + redTime + ripeTime)
-        {
-            OnExpired?.Invoke();
-            
-            if (parentJoint != null)
+            if (_stageIndex >= stages.Count)
             {
-                Destroy(parentJoint.gameObject);
+                _expired = true;
+
+                mainCollider.enabled = false;
+                
+                OnExpired?.Invoke();
+            
+                if (parentJoint != null)
+                {
+                    Destroy(parentJoint.gameObject, 0.18f);
+                }
+                Destroy(transform.gameObject, 0.18f);
             }
-            Destroy(transform.gameObject);
+            else
+            {
+                SelectStage(stages[_stageIndex]);
+            }
         }
     }
-
-    private void SetAging(string age)
+    
+    private void SelectStage(AppleStage stage)
     {
-        AppleAge = age;
-        OnAgeChanged?.Invoke(AppleAge);
+        _stage = stage;
+        
+        _stage.Art.DOScale(1f, 0.17f);
+        mainCollider.radius = _stage.ColliderRadius;
+        
+        OnStageChanged?.Invoke(stage);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (_expired) return;
+        
         if (Checks.IsGround(collision.collider) && !_touchedFloor)
         {
             _touchedFloor = true;
@@ -183,7 +192,6 @@ public class Apple : MonoBehaviour
         {
             if (collision.contactCount > 0 && !arrow.Reflected)
             {
-                
                 var point = collision.GetContact(0);
 
                 var effect = Prefabs.Instance.Produce("AppleHitFx");
@@ -194,6 +202,13 @@ public class Apple : MonoBehaviour
                 _damaged = true;
                     
                 arrow.StickTo(_rig);
+
+                _hits += 1;
+
+                if (!_touchedFloor && _hits == 2)
+                {
+                    //
+                }
             }
             
         }
@@ -203,5 +218,10 @@ public class Apple : MonoBehaviour
     {
         Collected = true;
         Destroy(gameObject);
+        
+        if (parentJoint != null)
+        {
+            Destroy(parentJoint.gameObject);
+        }
     }
 }

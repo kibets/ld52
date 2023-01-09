@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3391809945785579111}
   m_Layer: 6
-  m_Name: RedArt
+  m_Name: PinkArt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -177,7 +177,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d36b3efd3c36e4847a059697833ecb13, type: 2}
+  - {fileID: 2100000, guid: 2a7319c083317ad46b27c59c7fd1d74d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -293,7 +293,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2a7319c083317ad46b27c59c7fd1d74d, type: 2}
+  - {fileID: 2100000, guid: 9cb3c374bc974414d8351de88f1c8362, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -478,16 +478,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentJoint: {fileID: 0}
   mainCollider: {fileID: 465586979786803926}
-  greenArt: {fileID: 3488896921375420338}
-  redArt: {fileID: 3391809945785579111}
-  ripeArt: {fileID: 6331854180734275741}
-  greenTime: 5
-  redTime: 5
-  ripeTime: 5
-  greenColliderRad: 0.3
-  redColliderRad: 0.5
-  ripeColliderRad: 0.5
   floorTime: 6
+  stages:
+  - Name: green
+    Art: {fileID: 3488896921375420338}
+    Duration: 5
+    ColliderRadius: 0.3
+  - Name: pink
+    Art: {fileID: 3391809945785579111}
+    Duration: 5
+    ColliderRadius: 0.5
+  - Name: red
+    Art: {fileID: 6331854180734275741}
+    Duration: 5
+    ColliderRadius: 0.5
+  specialStage:
+    Name: golden
+    Art: {fileID: 0}
+    Duration: -1
+    ColliderRadius: 0.5
 --- !u!1 &7769423533749729827
 GameObject:
   m_ObjectHideFlags: 0
@@ -498,7 +507,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6331854180734275741}
   m_Layer: 6
-  m_Name: RipeArt
+  m_Name: RedArt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
