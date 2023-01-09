@@ -32,7 +32,7 @@ public class TreeBranch : MonoBehaviour
 
     private void Update()
     {
-        _timer -= Time.deltaTime;
+        _timer -= Time.deltaTime * Progress.Instance.AppleSpawnSpeedMod;
 
         if (_timer < 0)
         {

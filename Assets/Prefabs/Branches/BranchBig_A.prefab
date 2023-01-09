@@ -208,7 +208,7 @@ MonoBehaviour:
   - {fileID: 6470169887579723730}
   - {fileID: 6470169886775328425}
   - {fileID: 6470169886082831048}
-  SpawnTime: 7
+  SpawnTime: 14
   SpawnTimeSpread: 3
 --- !u!1001 &4118522142362304310
 PrefabInstance:

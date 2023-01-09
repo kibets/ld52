@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 
 public class Arrow : MonoBehaviour
@@ -55,7 +56,7 @@ public class Arrow : MonoBehaviour
         }
     }
 
-    public void StickTo(Rigidbody target)
+    public void StickTo(Rigidbody target, float adjustMod = 1f)
     {
         _collided = true;
         _sticked = true;
@@ -63,16 +64,26 @@ public class Arrow : MonoBehaviour
         target.AddForce(_rig.velocity, ForceMode.Impulse);
         
         Destroy(_rig);
+        
+        foreach (var col in _colliders)
+        {
+            col.enabled = false;
+        }
 
         var dir = target.position - transform.position;
 
-        transform.position += dir * 0.5f;
+        transform.position += dir * (0.5f * adjustMod);
         
         transform.position += transform.right * 0.3f;
 
         transform.SetParent(target.transform);
     }
 
+    public void ShrinkDestroy(float delay)
+    {
+        transform.DOScale(Vector3.one * 0.1f, 0.35f).OnComplete(() => Destroy(gameObject)).SetDelay(delay);
+    }
+    
     public void DisableColliders()
     {
         foreach (var col in _colliders)

@@ -3,9 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Progress : Singleton<Progress>
 {
+    public float AppleSpawnSpeedMod = 1f;
+    public float AppleRipeSpeedMod = 1f;
+    
     public Dictionary<string, int> ApplesCollected = new();
 
     public List<ApplesOrder> CurrentOrders = new()
@@ -19,6 +23,7 @@ public class Progress : Singleton<Progress>
             RewardFn = () =>
             {
                 Hero.Instance.AddKey("KeyGreen");
+                Progress.Instance.AppleSpawnSpeedMod *= 2f;
             }
         },
         new ApplesOrder
@@ -31,6 +36,7 @@ public class Progress : Singleton<Progress>
             RewardFn = () =>
             {
                 Hero.Instance.AddKey("KeyBlue");
+                Progress.Instance.AppleSpawnSpeedMod *= 2f;
             }
         },
         new ApplesOrder
@@ -39,8 +45,13 @@ public class Progress : Singleton<Progress>
             {
                 ["green"] = 2,
                 ["orange"] = 2,
+            },
+            RewardFn = () =>
+            {
+                Trader.Instance.Yell("*CLAP*\n*CLAP*\n*CLAP*");
+                Progress.Instance.AppleSpawnSpeedMod *= 2f;
             }
-        }
+        },
     };
 
     public ApplesOrder CurrentOrder => CurrentOrders.Count > 0 ? CurrentOrders[0] : null;

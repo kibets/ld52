@@ -116,7 +116,7 @@ public class Hero : Singleton<Hero>
 
     private void UpdateFireInput()
     {
-        if (ShootingDisabled) return;
+        if (ShootingDisabled && !_lookingRight) return;
 
         if (Input.GetButton("Fire1"))
         {

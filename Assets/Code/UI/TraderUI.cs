@@ -8,18 +8,23 @@ using UnityEngine.UI;
 public class TraderUI : MonoBehaviour
 {
     [SerializeField] private Transform container;
+    [SerializeField] private Transform yellContainer;
 
     [SerializeField] private TextMeshProUGUI mainText;
+    [SerializeField] private TextMeshProUGUI yellText;
     [SerializeField] private Button confirmButton;
     [SerializeField] private TextMeshProUGUI confirmButtonText;
-    private Coroutine _acceptRoutine;
 
     private bool _accepting;
     private bool _shouldHide;
-
+    
+    private Coroutine _yellRoutine;
+    private Coroutine _acceptRoutine;
+    
     private void Awake()
     {
         container.gameObject.SetActive(false);
+        yellText.gameObject.SetActive(false);
     }
 
     public void UpdateUI()
@@ -131,5 +136,27 @@ public class TraderUI : MonoBehaviour
         {
             Hide();
         }
+    }
+
+    public void Yell(string text)
+    {
+        if (_yellRoutine != null)
+        {
+            StopCoroutine(_yellRoutine);
+            _yellRoutine = null;
+        }
+        
+        _yellRoutine = StartCoroutine(YellRoutine(text));
+    }
+
+    private IEnumerator YellRoutine(string text)
+    {
+        yellContainer.gameObject.SetActive(false);
+        yellText.gameObject.SetActive(true);
+        yellText.SetText(text);
+
+        yield return new WaitForSeconds(2f);
+        yellContainer.gameObject.SetActive(true);
+        yellText.gameObject.SetActive(false);
     }
 }

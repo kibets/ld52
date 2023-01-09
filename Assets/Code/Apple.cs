@@ -129,7 +129,7 @@ public class Apple : MonoBehaviour
     {
         if (_jointBreak || _damaged) return;
         
-        _ripenTimer += Time.deltaTime;
+        _ripenTimer += Time.deltaTime * Progress.Instance.AppleRipeSpeedMod;
 
         if (_ripenTimer > greenTime && !_stageRed)
         {
