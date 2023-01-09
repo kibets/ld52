@@ -22,7 +22,7 @@ public class Progress : Singleton<Progress>
             {
                 // ["green"] = 1,
                 
-                ["pink"] = 6
+                ["pink"] = 3
             },
             RewardFn = () =>
             {
@@ -39,8 +39,8 @@ public class Progress : Singleton<Progress>
             {
                 // ["green"] = 1,
 
-                ["green"] = 5,
-                ["red"] = 10,
+                ["green"] = 6,
+                ["red"] = 3,
             },
             RewardFn = () =>
             {
@@ -60,7 +60,7 @@ public class Progress : Singleton<Progress>
             {
                 // ["green"] = 1,
                 
-                ["pink"] = 10,
+                ["pink"] = 5,
                 ["purple"] = 5,
             },
             RewardFn = () =>
@@ -68,10 +68,10 @@ public class Progress : Singleton<Progress>
                 Hero.Instance.AddKey("KeyBlue");
                 Progress.Instance.AppleSpawnSpeedMod *= 1.5f;
                 
-                foreach (var b in Registry.Instance.GetBranches(2))
-                {
-                    b.SpawnCodes.Add("AppleJointBomb");
-                }
+                // foreach (var b in Registry.Instance.GetBranches(2))
+                // {
+                //     b.SpawnCodes.Add("AppleJointBomb");
+                // }
             }
         },
         ///// Quest #3
@@ -99,9 +99,9 @@ public class Progress : Singleton<Progress>
         {
             Order = new Dictionary<string, int>()
             {
-                ["purple"] = 10,
-                ["purple"] = 10,
-                ["bomb"] = 10,
+                ["purple"] = 8,
+                ["purple"] = 8,
+                ["bomb"] = 8,
             },
             RewardFn = () =>
             {
@@ -119,7 +119,7 @@ public class Progress : Singleton<Progress>
         {
             Order = new Dictionary<string, int>()
             {
-                ["golden"] = 10,
+                ["golden"] = 7,
             },
             RewardFn = () =>
             {

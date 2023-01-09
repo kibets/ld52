@@ -55,6 +55,20 @@ public class TreeBranch : MonoBehaviour
         {
             var variant = SpawnCodes.PickRandom();
 
+            if (Random.value < 0.5f && SpawnCodes.Contains("AppleJointPurple"))
+            {
+                var heroPos = Hero.Instance.transform.position;
+                
+                var noEnemies = !Registry.Instance.GetEnemies(transform.position, 30f).Any();
+                var noPurApples = Registry.Instance.GetApples(transform.position, 30f).All(a => a.Stage.Name != "purple");
+
+                if (noEnemies && noPurApples)
+                {
+                    variant = "AppleJointPurple";
+                    Debug.Log("## Shortcut");
+                }
+            }
+            
             var appleJoint = Prefabs.Instance.Produce<AppleJoint>(variant);
 
             appleJoint.transform.SetParentZero(socket);

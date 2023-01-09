@@ -24,13 +24,13 @@ public class LevelUI : Singleton<LevelUI>
         {
             // submitButton.gameObject.SetActive(false);
             
-            applesCount.SetText("No Orders!");
+            applesCount.SetText("");
         }
         else
         {
             // submitButton.interactable = currentOrder.IsFulfilled();
             
-            var result = "Apples:";
+            var result = "Harvested:";
 
             foreach (var orderKV in currentOrder.Order)
             {

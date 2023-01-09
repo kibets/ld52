@@ -7,6 +7,20 @@ public class Trader : Singleton<Trader>
 {
     [SerializeField] private TraderUI traderUI;
 
+    private List<string> helloWords = new List<string>()
+    {
+        "Greetings!",
+        "Greetings!",
+        "Greetings!",
+        "It is you again!",
+        "It is you again!",
+        "It is you again!",
+        "Welcome!",
+        "Hi there!",
+        "Nice to see you!",
+    };
+
+    
     private List<string> yellWords = new List<string>()
     {
         "Stop that!",
@@ -29,6 +43,18 @@ public class Trader : Singleton<Trader>
     private void Awake()
     {
         _rig = GetComponent<Rigidbody>();
+    }
+
+    private void Start()
+    {
+        StartCoroutine(HelloRoutine());
+    }
+
+    private IEnumerator HelloRoutine()
+    {
+        yield return new WaitForSeconds(1.13f);
+        
+        Yell(helloWords.PickRandom());
     }
 
     private void Update()

@@ -22,7 +22,7 @@ public class Bomb : MonoBehaviour
     {
         var exp = Prefabs.Instance.Produce<Explosion>();
         exp.transform.position = transform.position;
-        exp.Setup(5f);
+        exp.Setup(4f);
         
         Destroy(gameObject);
     }

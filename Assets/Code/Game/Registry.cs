@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Registry : Singleton<Registry>
 {
-    private List<Enemy> Enemies = new ();
-    private List<Apple> Apples = new ();
+    public List<Enemy> Enemies = new ();
+    public List<Apple> Apples = new ();
     private List<Arrow> Arrows = new ();
     public List<TreeBranch> Branches = new ();
 

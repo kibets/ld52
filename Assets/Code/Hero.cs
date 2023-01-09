@@ -224,6 +224,15 @@ public class Hero : Singleton<Hero>
                 Progress.Instance.CollectApple(apple);
                 LevelUI.Instance.UpdateUI();
 
+                if (apple.Stage.Name == "golden")
+                {
+                    Health += 1;
+                    
+                    var flyingText = Prefabs.Instance.Produce<FlyingText>();
+                    flyingText.transform.position = transform.position + Vector3.up * 4f;
+                    flyingText.FlyAnimation("+1 HP", new Color(1f, 0.99f, 0.87f));
+                }
+                
                 apple.Collect();
             }
         }

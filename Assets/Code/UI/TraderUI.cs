@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,6 +26,10 @@ public class TraderUI : MonoBehaviour
     {
         container.gameObject.SetActive(false);
         yellText.gameObject.SetActive(false);
+
+        yellText.transform.DOLocalRotate(new Vector3(0, 0, 3f), 0.33f)
+            .SetEase(Ease.Linear)
+            .SetLoops(-1, LoopType.Yoyo);
     }
 
     public void UpdateUI()
@@ -113,12 +118,12 @@ public class TraderUI : MonoBehaviour
             yield return new WaitForSeconds(1.7f);
             mainText.SetText("");
             
-            yield return new WaitForSeconds(4f);
+            yield return new WaitForSeconds(3f);
         }
 
         if (Progress.Instance.HasMoreOrders())
         {
-            mainText.SetText("New quest for you!");
+            mainText.SetText("New quest!");
             yield return new WaitForSeconds(2f);
             
             UpdateUI();
