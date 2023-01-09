@@ -44,6 +44,11 @@ public class Enemy : MonoBehaviour
         _state = EnemyState.Idle;
     }
 
+    private void Start()
+    {
+        if (Registry.Instance != null) Registry.Instance.Add(this);
+    }
+    
     private void Update()
     {
         _myPos = transform.position;
@@ -118,12 +123,13 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void Die()
+    public void Die()
     {
         if (_dead) return;
         
         _dead = true;
-
+        Health = 0;
+        
         _rig.useGravity = true;
         _rig.drag = 0.1f;
         
@@ -142,5 +148,10 @@ public class Enemy : MonoBehaviour
         
         Destroy(gameObject);
         
+    }
+
+    private void OnDestroy()
+    {
+        if (Registry.Instance != null) Registry.Instance.Remove(this);
     }
 }

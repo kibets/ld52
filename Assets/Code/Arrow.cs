@@ -18,10 +18,17 @@ public class Arrow : MonoBehaviour
     private bool _touchedFloor;
     private float _reflectedTimer;
 
+    public bool Fake { get; set; }
+    
     private void Awake()
     {
         _rig = GetComponent<Rigidbody>();
         _colliders = GetComponentsInChildren<Collider>().ToList();
+    }
+
+    private void Start()
+    {
+        if (Registry.Instance != null) Registry.Instance.Add(this);
     }
 
     private void Update()
@@ -86,6 +93,7 @@ public class Arrow : MonoBehaviour
     
     public void DisableColliders()
     {
+        Fake = true;
         foreach (var col in _colliders)
         {
             col.enabled = false;
@@ -110,5 +118,10 @@ public class Arrow : MonoBehaviour
         _rig.collisionDetectionMode = CollisionDetectionMode.Discrete;
             
         Destroy(gameObject, 3f);
+    }
+    
+    private void OnDestroy()
+    {
+        if (Registry.Instance != null) Registry.Instance.Remove(this);
     }
 }

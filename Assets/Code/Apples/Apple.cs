@@ -70,6 +70,8 @@ public class Apple : MonoBehaviour
         }
 
         SelectStage(_stage);
+        
+        if (Registry.Instance != null) Registry.Instance.Add(this);
     }
 
     private void Update()
@@ -179,6 +181,19 @@ public class Apple : MonoBehaviour
         
         OnStageChanged?.Invoke(stage);
     }
+    
+    public void SetLastStage()
+    {
+        _stageTimer = 0;
+        
+        if (_stage != null)
+        {
+            _stage.Art.DOScale(0.1f, 0.17f);
+        }
+
+        _stageIndex = stages.Count - 1;
+        SelectStage(stages[_stageIndex]);
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -226,4 +241,10 @@ public class Apple : MonoBehaviour
             Destroy(parentJoint.gameObject);
         }
     }
+
+    private void OnDestroy()
+    {
+        if (Registry.Instance != null) Registry.Instance.Remove(this);
+    }
+
 }
