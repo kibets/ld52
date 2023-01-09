@@ -233,12 +233,41 @@ public class Hero : Singleton<Hero>
     {
         Key = Prefabs.Instance.Produce<Key>(keyCode);
         Key.transform.SetParent(keyHolder);
-        Key.transform.position = Trader.Instance.transform.position + Vector3.up * 3f;
+        Key.transform.position = Trader.Instance.transform.position + Vector3.right * 3f;
         Key.transform.rotation = quaternion.identity;
 
-        Key.transform.DOLocalMove(Vector3.zero, 1.13f);
+        Key.transform.DOLocalMove(Vector3.zero, 1.91f).OnComplete(() =>
+        {
+            var flyingText = Prefabs.Instance.Produce<FlyingText>();
+            flyingText.transform.position = transform.position + Vector3.up * 4f;
+            flyingText.FlyAnimation(Key.Title, new Color(1f, 0.99f, 0.87f), 1.7f);
+        });
     }
 
+    public void AddBow(string bowCode)
+    {
+        var oldBow = bow;
+        var bowArm = bow.transform.parent;
+        
+        var newBow = Prefabs.Instance.Produce<Bow>(bowCode);
+        
+        newBow.transform.position = Trader.Instance.transform.position + Vector3.up * 2f; // transform.position + Vector3.up * 15f;
+        newBow.transform.rotation = quaternion.identity;
+        
+        newBow.transform.localScale = Vector3.one * 1.5f;
+        newBow.transform.DOScale(Vector3.one, 1.5f);
+        
+        newBow.FlyTo(oldBow.transform, 1.91f, () =>
+        {
+            Destroy(oldBow.gameObject);
+            bow = newBow;
+            newBow.transform.SetParentZero(bowArm);
+
+            var flyingText = Prefabs.Instance.Produce<FlyingText>();
+            flyingText.transform.position = transform.position + Vector3.up * 4f;
+            flyingText.FlyAnimation(bow.Title, new Color(1f, 0.99f, 0.87f), 1.7f);
+        });
+    }
 
     public void Bite()
     {
@@ -302,6 +331,11 @@ public class Hero : Singleton<Hero>
             rig.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
             
             gib.SetParent(null);
+        }
+
+        if (bow != null)
+        {
+            Destroy(bow.gameObject);
         }
         
         yield return new WaitForSeconds(3f);

@@ -107,11 +107,13 @@ public class TraderUI : MonoBehaviour
 
         if (rewardFn != null)
         {
-            mainText.SetText("Your reward!");
+            mainText.SetText("Your reward...");
             yield return new WaitForSeconds(1f);
             rewardFn?.Invoke();
+            yield return new WaitForSeconds(1.7f);
+            mainText.SetText("");
             
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(4f);
         }
 
         if (Progress.Instance.HasMoreOrders())

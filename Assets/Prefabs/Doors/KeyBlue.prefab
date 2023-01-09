@@ -96,6 +96,11 @@ PrefabInstance:
       propertyPath: Code
       value: KeyBlue
       objectReference: {fileID: 0}
+    - target: {fileID: 6425090857016688621, guid: f27a2a07571497749b1b942da07c51c8,
+        type: 3}
+      propertyPath: Title
+      value: Blue Key
+      objectReference: {fileID: 0}
     - target: {fileID: 6425090857016688622, guid: f27a2a07571497749b1b942da07c51c8,
         type: 3}
       propertyPath: m_RootOrder

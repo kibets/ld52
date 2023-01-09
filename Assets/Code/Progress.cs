@@ -39,7 +39,7 @@ public class Progress : Singleton<Progress>
             },
             RewardFn = () =>
             {
-                Hero.Instance.AddKey("KeyBlue");
+                Hero.Instance.AddBow("BowSilver");
                 Progress.Instance.AppleSpawnSpeedMod *= 2f;
             }
         },
@@ -54,7 +54,22 @@ public class Progress : Singleton<Progress>
             },
             RewardFn = () =>
             {
+                Hero.Instance.AddKey("KeyBlue");
                 Progress.Instance.AppleSpawnSpeedMod *= 2f;
+            }
+        },
+        new ApplesOrder
+        {
+            Order = new Dictionary<string, int>()
+            {
+                ["purple"] = 1,
+                
+                // ["purple"] = 10,
+                // ["green"] = 20,
+            },
+            RewardFn = () =>
+            {
+                Hero.Instance.AddBow("BowGolden");
             }
         },
         new ApplesOrder

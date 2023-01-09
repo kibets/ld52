@@ -245,9 +245,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a327ca439bbe39d4d972e0aeef05ce98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Title: Stick Bow
   muzzle: {fileID: 7144884917578703284}
   bowForceBase: 5
-  bowForceSpring: 30
+  bowForceSpring: 20
   springTime: 0.6
   reloadingTime: 0.2
   bowChargeFx: {fileID: 2864158132421095916}

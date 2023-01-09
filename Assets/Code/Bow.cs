@@ -1,11 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
 using UnityEngine;
 
 public class Bow : MonoBehaviour
 {
+    [SerializeField] public string Title;
     [SerializeField] private Transform muzzle;
     [SerializeField] private float bowForceBase;
     [SerializeField] private float bowForceSpring;
@@ -21,7 +19,13 @@ public class Bow : MonoBehaviour
     private float _reloadingTimer;
 
     private Arrow _arrow;
-    
+
+    private float _flyingTimer;
+    private float _flyingDuration;
+    private Vector3 _flyingOrigin;
+    private Transform _flyingTarget;
+    private Action _flyingCallback;
+
     private void Update()
     {
         if (_reloadingTimer > 0)
@@ -44,6 +48,24 @@ public class Bow : MonoBehaviour
 
                     // MousePointer.Instance.PlayBowMaxCharge();
                 }
+            }
+        }
+
+        if (_flyingTimer > 0)
+        {
+            _flyingTimer -= Time.deltaTime;
+
+            if (_flyingTimer < 0) _flyingTimer = 0;
+
+            var progress = (_flyingDuration - _flyingTimer) / _flyingDuration;
+            
+            transform.position = Vector3.Lerp(_flyingOrigin, _flyingTarget.position, progress);
+            transform.rotation = Quaternion.Lerp(transform.rotation, _flyingTarget.rotation, progress);
+            if (_flyingTimer <= 0)
+            {
+                _flyingCallback?.Invoke();
+                _flyingCallback = null;
+                _flyingTarget = null;
             }
         }
     }
@@ -108,4 +130,12 @@ public class Bow : MonoBehaviour
         }
     }
 
+    public void FlyTo(Transform target, float duration, Action callback)
+    {
+        _flyingOrigin = transform.position;
+        _flyingDuration = duration;
+        _flyingTarget = target;
+        _flyingTimer = duration;
+        _flyingCallback = callback;
+    }
 }

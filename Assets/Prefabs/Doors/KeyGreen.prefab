@@ -4989,6 +4989,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10fd6b12789ddc84390e663bcc6bcace, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Title: Green Key
   Code: KeyGreen
 --- !u!1 &6425090857495013442
 GameObject:
