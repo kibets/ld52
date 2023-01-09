@@ -162,11 +162,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-  m_Name: FredokaOne-Regular SDF
+  m_Name: FredokaOne-Regular
   m_EditorClassIdentifier: 
-  hashCode: -1279090830
+  hashCode: 1788584451
   material: {fileID: -399911748534096947}
-  materialHashCode: -792279406
+  materialHashCode: -498931261
   m_Version: 1.1.0
   m_SourceFontFileGUID: 0c197ef20e18f0a41b5f0410def2c2a5
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 0c197ef20e18f0a41b5f0410def2c2a5,

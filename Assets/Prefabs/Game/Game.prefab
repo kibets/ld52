@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c49ddbae5912c5478a70aa1136cf7c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AppleSpawnSpeedMod: 1
+  AppleRipeSpeedMod: 1
 --- !u!1 &8596714491848946065
 GameObject:
   m_ObjectHideFlags: 0
@@ -53,6 +55,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7357898556246344461}
+  - component: {fileID: 3844004083959189638}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -77,6 +80,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3844004083959189638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8596714491848946065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 796990bbc1900144e8bbed4e42decf53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6688593761517583004
 PrefabInstance:
   m_ObjectHideFlags: 0

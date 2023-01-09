@@ -44,6 +44,8 @@ public class Hero : Singleton<Hero>
     private bool _blinking;
     private bool _dead;
 
+    public bool Dead => _dead;
+    
     public Key Key { get; private set; }
     public bool ShootingDisabled { get; set; }
 
@@ -301,7 +303,9 @@ public class Hero : Singleton<Hero>
             
             gib.SetParent(null);
         }
-
+        
         yield return new WaitForSeconds(3f);
+
+        FailScreenUI.Instance.Show();
     }
 }

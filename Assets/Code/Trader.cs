@@ -24,18 +24,48 @@ public class Trader : Singleton<Trader>
 
     private Rigidbody _rig;
 
+    private bool _deadRoutine;
+    
     private void Awake()
     {
         _rig = GetComponent<Rigidbody>();
+    }
+
+    private void Update()
+    {
+        if (!_deadRoutine && Hero.Instance.Dead)
+        {
+            _deadRoutine = true;
+            traderUI.Hide();
+
+            StartCoroutine(DeadRoutine());
+        }
+    }
+
+    private IEnumerator DeadRoutine()
+    {
+        Yell("Oh no!");
+
+        yield return new WaitForSeconds(4f);
+        Yell("Anyway...");
+        
+        yield return new WaitForSeconds(10f);
+        Yell("Restart?");
+        
+        yield return new WaitForSeconds(4);
+        Yell("...");
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Hero") && other.TryGetComponent<Hero>(out var hero))
         {
-            hero.ShootingDisabled = true;
-            
-            traderUI.Show();
+
+            if (!hero.Dead)
+            {
+                hero.ShootingDisabled = true;
+                traderUI.Show();
+            }
         }
     }
 
@@ -43,8 +73,11 @@ public class Trader : Singleton<Trader>
     {
         if (other.CompareTag("Hero") && other.TryGetComponent<Hero>(out var hero))
         {
-            hero.ShootingDisabled = false;
-            traderUI.Hide();
+            if (!hero.Dead)
+            {
+                hero.ShootingDisabled = false;
+                traderUI.Hide();
+            }
         }
     }
 

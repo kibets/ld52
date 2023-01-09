@@ -73,12 +73,12 @@ public class Enemy : MonoBehaviour
 
     private void FixedIdle()
     {
-        if (_targetDist < AgroRadius) _state = EnemyState.Agro;
+        if (_targetDist < AgroRadius && !Hero.Instance.Dead) _state = EnemyState.Agro;
     }
 
     private void FixedAgro()
     {
-        if (_targetDist > DeAgroRadius) _state = EnemyState.Idle;
+        if (_targetDist > DeAgroRadius || Hero.Instance.Dead) _state = EnemyState.Idle;
         
         _rig.AddForce(_targetDir.normalized * (Speed * Time.fixedDeltaTime), ForceMode.VelocityChange);
     }
