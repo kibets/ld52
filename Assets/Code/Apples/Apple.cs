@@ -124,6 +124,7 @@ public class Apple : MonoBehaviour
         if (parentJoint == null)
         {
             _jointBreak = true;
+            return;
         }
         
         if (parentJoint.MainJoint == null || parentJoint.MainJoint.connectedBody == null)

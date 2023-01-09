@@ -41,7 +41,7 @@ public class TraderUI : MonoBehaviour
         {
             if (currentOrder.IsFulfilled())
             {
-                mainText.SetText("Did you get what I requested?");
+                mainText.SetText("Did you get what I asked?");
                 
                 confirmButton.gameObject.SetActive(true);
             }
@@ -118,7 +118,7 @@ public class TraderUI : MonoBehaviour
 
         if (Progress.Instance.HasMoreOrders())
         {
-            mainText.SetText("I have new order!");
+            mainText.SetText("New quest for you!");
             yield return new WaitForSeconds(2f);
             
             UpdateUI();

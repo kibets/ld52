@@ -8,15 +8,19 @@ public class TreeBranch : MonoBehaviour
 {
     [SerializeField] private List<Transform> branchSockets;
     [SerializeField] private List<Transform> fruitSockets;
+    [SerializeField] public int RoomIndex;
+
+    [SerializeField] public List<string> SpawnCodes;
     
     public float SpawnTime;
     public float SpawnTimeSpread;
     
     private float _timer;
-    
-    
+
     private void Start()
     {
+        if (Registry.Instance != null) Registry.Instance.Add(this);
+        
         var origin = transform.localRotation.eulerAngles.z;
 
         var angle = Rnd.ValueSpread(5f, 5f);
@@ -49,21 +53,17 @@ public class TreeBranch : MonoBehaviour
 
         if (socket != null)
         {
-            string variant;
-            if (Random.value > 0.9)
-            {
-                variant = "AppleJoint";
-            }
-            else
-            {
-                // variant = "AppleJointPurple";
-                variant = Random.value > 0.5 ? "AppleJointBomb" : "AppleJointPurple";
-            }
+            var variant = SpawnCodes.PickRandom();
 
             var appleJoint = Prefabs.Instance.Produce<AppleJoint>(variant);
 
             appleJoint.transform.SetParentZero(socket);
             appleJoint.transform.rotation = Quaternion.identity;
         }
+    }
+    
+    private void OnDestroy()
+    {
+        if (Registry.Instance != null) Registry.Instance.Remove(this);
     }
 }

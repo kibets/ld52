@@ -8,81 +8,124 @@ public class Progress : Singleton<Progress>
     
     public float AppleSpawnSpeedMod = 1f;
     public float AppleRipeSpeedMod = 1f;
+    public double ApplePurpleGlobalChance = 0f;
+    public double AppleBombGlobalChance = 0f;
     
     public Dictionary<string, int> ApplesCollected = new();
 
     public List<ApplesOrder> CurrentOrders = new()
     {
+        ///// Quest #0
         new ApplesOrder
         {
             Order = new Dictionary<string, int>()
             {
-                ["green"] = 1,
+                // ["green"] = 1,
                 
-                // ["pink"] = 6
+                ["pink"] = 6
             },
             RewardFn = () =>
             {
                 Hero.Instance.AddKey("KeyGreen");
-                Progress.Instance.AppleSpawnSpeedMod *= 2f;
-
+                
+                Progress.Instance.AppleSpawnSpeedMod *= 1.5f;
                 Progress.Instance.AppleFirstStageMod = 1f;
             }
         },
+        ///// Quest #1 
         new ApplesOrder
         {
             Order = new Dictionary<string, int>()
             {
-                ["green"] = 1,
+                // ["green"] = 1,
 
-                // ["pink"] = 10,
-                // ["green"] = 10,
+                ["green"] = 5,
+                ["red"] = 10,
             },
             RewardFn = () =>
             {
                 Hero.Instance.AddBow("BowSilver");
-                Progress.Instance.AppleSpawnSpeedMod *= 2f;
+                Progress.Instance.AppleSpawnSpeedMod *= 1.5f;
+                
+                foreach (var b in Registry.Instance.GetBranches(2))
+                {
+                    b.SpawnCodes.Add("AppleJointPurple");
+                }
             }
         },
+        ///// Quest #2
         new ApplesOrder
         {
             Order = new Dictionary<string, int>()
             {
-                ["green"] = 1,
+                // ["green"] = 1,
                 
-                // ["pink"] = 10,
-                // ["red"] = 10,
+                ["pink"] = 10,
+                ["purple"] = 5,
             },
             RewardFn = () =>
             {
                 Hero.Instance.AddKey("KeyBlue");
-                Progress.Instance.AppleSpawnSpeedMod *= 2f;
+                Progress.Instance.AppleSpawnSpeedMod *= 1.5f;
+                
+                foreach (var b in Registry.Instance.GetBranches(2))
+                {
+                    b.SpawnCodes.Add("AppleJointBomb");
+                }
             }
         },
+        ///// Quest #3
         new ApplesOrder
         {
             Order = new Dictionary<string, int>()
             {
-                ["purple"] = 1,
+                // ["purple"] = 1,
                 
-                // ["purple"] = 10,
-                // ["green"] = 20,
+                ["golden"] = 3,
             },
             RewardFn = () =>
             {
                 Hero.Instance.AddBow("BowGolden");
+                
+                foreach (var b in Registry.Instance.Branches)
+                {
+                    b.SpawnCodes.Add("AppleJointBomb");
+                }
             }
         },
+        
+        ///// Quest #4
         new ApplesOrder
         {
             Order = new Dictionary<string, int>()
             {
                 ["purple"] = 10,
-                ["green"] = 20,
+                ["purple"] = 10,
+                ["bomb"] = 10,
+            },
+            RewardFn = () =>
+            {
+                Trader.Instance.Yell("Your last quest!");
+                
+                foreach (var b in Registry.Instance.Branches)
+                {
+                    b.SpawnCodes.Add("AppleJointPurple");
+                }
+            }
+        },
+        
+        ///// Quest #4
+        new ApplesOrder
+        {
+            Order = new Dictionary<string, int>()
+            {
+                ["golden"] = 10,
             },
             RewardFn = () =>
             {
                 Hero.Instance.AddKey("KeyPurple");
+                Progress.Instance.AppleSpawnSpeedMod *= 1.5f;
+                
             }
         },
     };

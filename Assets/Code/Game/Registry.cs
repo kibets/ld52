@@ -8,6 +8,7 @@ public class Registry : Singleton<Registry>
     private List<Enemy> Enemies = new ();
     private List<Apple> Apples = new ();
     private List<Arrow> Arrows = new ();
+    public List<TreeBranch> Branches = new ();
 
     public void Add(Apple apple)
     {
@@ -39,6 +40,16 @@ public class Registry : Singleton<Registry>
         Enemies.Remove(obj);
     }
 
+    public void Add(TreeBranch obj)
+    {
+        Branches.Add(obj);
+    }
+    
+    public void Remove(TreeBranch obj)
+    {
+        Branches.Remove(obj);
+    }
+    
     public IEnumerable<Enemy> GetEnemies(Vector3 pos, float radius)
     {
         return Enemies.Where(e => Vector3.Distance(e.transform.position, pos) <= radius);
@@ -52,5 +63,10 @@ public class Registry : Singleton<Registry>
     public IEnumerable<Apple> GetApples(Vector3 pos, float radius)
     {
         return Apples.Where(e => Vector3.Distance(e.transform.position, pos) <= radius);
+    }
+
+    public IEnumerable<TreeBranch> GetBranches(int room)
+    {
+        return Branches.Where(b => b.RoomIndex == room);
     }
 }

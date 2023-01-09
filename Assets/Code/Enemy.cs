@@ -145,6 +145,10 @@ public class Enemy : MonoBehaviour
             arrow.transform.SetPositionAndRotation(oldArrow.position, oldArrow.rotation);
             arrow.Discharge();
         }
+
+        var core = Prefabs.Instance.Produce("ApplePurple");
+        core.transform.position = transform.position;
+        
         
         Destroy(gameObject);
         
