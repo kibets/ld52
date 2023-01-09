@@ -33,6 +33,11 @@ public class Door : MonoBehaviour
 
     private void OpenDoor()
     {
+        if (keyCode == "KeyPurple")
+        {
+            Environment.Instance.SwitchColliderToEndGame();
+        }
+        
         container.transform.DOLocalMoveY(15f, 1.17f).SetEase(Ease.InOutSine).SetDelay(0.7f);
     }
 }

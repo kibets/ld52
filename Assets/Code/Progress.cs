@@ -48,7 +48,7 @@ public class Progress : Singleton<Progress>
             },
             RewardFn = () =>
             {
-                Trader.Instance.Yell("*CLAP*\n*CLAP*\n*CLAP*");
+                Hero.Instance.AddKey("KeyPurple");
                 Progress.Instance.AppleSpawnSpeedMod *= 2f;
             }
         },
