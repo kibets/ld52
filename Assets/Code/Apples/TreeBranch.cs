@@ -50,14 +50,14 @@ public class TreeBranch : MonoBehaviour
         if (socket != null)
         {
             string variant;
-            if (Random.value > 0.1)
+            if (Random.value > 0.9)
             {
                 variant = "AppleJoint";
             }
             else
             {
-                variant = "AppleJointPurple";
-                // variant = Random.value > 0.5 ? "AppleJointRock" : "AppleJointSpikes";
+                // variant = "AppleJointPurple";
+                variant = Random.value > 0.5 ? "AppleJointBomb" : "AppleJointPurple";
             }
 
             var appleJoint = Prefabs.Instance.Produce<AppleJoint>(variant);

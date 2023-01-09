@@ -13,6 +13,7 @@ TagManager:
   - Enemy
   - Key
   - Spikes
+  - Bomb
   layers:
   - Default
   - TransparentFX
@@ -30,7 +31,7 @@ TagManager:
   - DoorTrigger
   - Key
   - Spikes
-  - 
+  - Bomb
   - 
   - 
   - 
