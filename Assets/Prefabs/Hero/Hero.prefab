@@ -296,7 +296,7 @@ MonoBehaviour:
   Speed: 25
   JumpSpeed: 250
   GravityForce: 30
-  Health: 3
+  Health: 5
   arm: {fileID: 1531810454517127625}
   bow: {fileID: 2511056568522369835}
   leftArm: {fileID: 6533009900025625139}

@@ -12,7 +12,7 @@ public class Logo : MonoBehaviour
 
     private IEnumerator LogoRoutine()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
         
         transform.DOLocalMoveY(20f, 0.79f).SetEase(Ease.InBack);
         Sounds.Instance.PlayExact("ui_swing_1");
