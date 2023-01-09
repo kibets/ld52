@@ -23,6 +23,9 @@ public class Apple : MonoBehaviour
     [SerializeField] private float ripeColliderRad;
     
     [SerializeField] private float floorTime;
+
+    public event Action<string> OnAgeChanged;
+    public event Action OnExpired;
     
     public bool Collected { get; set; }
     
@@ -40,7 +43,7 @@ public class Apple : MonoBehaviour
     
     private float _floorTimer;
     private Coroutine _blinkRoutine;
-    public string AppleType { get; set; }
+    public string AppleAge { get; set; }
 
     private void Awake()
     {
@@ -56,7 +59,7 @@ public class Apple : MonoBehaviour
         redArt.localScale = Vector3.one * 0.1f;
         mainCollider.radius = greenColliderRad;
         
-        AppleType = "green";
+        AppleAge = "green";
     }
 
     private void Update()
@@ -135,7 +138,7 @@ public class Apple : MonoBehaviour
             greenArt.DOScale(0.1f, 0.17f);
             mainCollider.radius = redColliderRad;
 
-            AppleType = "red";
+            SetAging("red");
         }
 
         if (_ripenTimer > greenTime + redTime && !_stageBad)
@@ -146,18 +149,26 @@ public class Apple : MonoBehaviour
             redArt.DOScale(0.1f, 0.17f);
             greenArt.DOScale(0.1f, 0.17f);
             mainCollider.radius = ripeColliderRad;
-            
-            AppleType = "orange";
+
+            SetAging("orange");
         }
 
         if (_ripenTimer > greenTime + redTime + ripeTime)
         {
+            OnExpired?.Invoke();
+            
             if (parentJoint != null)
             {
                 Destroy(parentJoint.gameObject);
             }
             Destroy(transform.gameObject);
         }
+    }
+
+    private void SetAging(string age)
+    {
+        AppleAge = age;
+        OnAgeChanged?.Invoke(AppleAge);
     }
 
     private void OnCollisionEnter(Collision collision)

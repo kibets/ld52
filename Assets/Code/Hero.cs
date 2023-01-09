@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class Hero : Singleton<Hero>
@@ -19,6 +20,8 @@ public class Hero : Singleton<Hero>
     [SerializeField] private Transform legRight;
 
     [SerializeField] private Transform artGroup;
+
+    [SerializeField] private Transform keyHolder;
     
     private Rigidbody _rig;
 
@@ -33,6 +36,8 @@ public class Hero : Singleton<Hero>
     private bool _doJump;
     private bool _animMoving;
     private bool _lookingRight;
+
+    public Key Key { get; private set; }
     public bool ShootingDisabled { get; set; }
 
     private void Awake()
@@ -210,5 +215,16 @@ public class Hero : Singleton<Hero>
             
         }
     }
+
+    public void AddKey(string keyCode)
+    {
+        Key = Prefabs.Instance.Produce<Key>(keyCode);
+        Key.transform.SetParent(keyHolder);
+        Key.transform.position = Trader.Instance.transform.position + Vector3.up * 3f;
+        Key.transform.rotation = quaternion.identity;
+
+        Key.transform.DOLocalMove(Vector3.zero, 1.13f);
+    }
+    
 
 }

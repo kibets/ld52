@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Trader : MonoBehaviour
+public class Trader : Singleton<Trader>
 {
     [SerializeField] private TraderUI traderUI;
     

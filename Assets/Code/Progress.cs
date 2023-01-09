@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Progress : Singleton<Progress>
@@ -12,7 +14,11 @@ public class Progress : Singleton<Progress>
         {
             Order = new Dictionary<string, int>()
             {
-                ["red"] = 2
+                ["green"] = 2
+            },
+            RewardFn = () =>
+            {
+                Hero.Instance.AddKey("KeyGreen");
             }
         },
         new ApplesOrder
@@ -21,6 +27,10 @@ public class Progress : Singleton<Progress>
             {
                 ["red"] = 2,
                 ["green"] = 2,
+            },
+            RewardFn = () =>
+            {
+                Hero.Instance.AddKey("KeyBlue");
             }
         },
         new ApplesOrder
@@ -38,12 +48,12 @@ public class Progress : Singleton<Progress>
     
     public void CollectApple(Apple apple)
     {
-        if (!ApplesCollected.ContainsKey(apple.AppleType))
+        if (!ApplesCollected.ContainsKey(apple.AppleAge))
         {
-            ApplesCollected.Add(apple.AppleType, 0);
+            ApplesCollected.Add(apple.AppleAge, 0);
         }
 
-        ApplesCollected[apple.AppleType] += 1;
+        ApplesCollected[apple.AppleAge] += 1;
     }
 
     public int GetCollected(string key)
@@ -87,6 +97,8 @@ public class ApplesOrder
 {
     public Dictionary<string, int> Order;
 
+    public Action RewardFn;
+    
     public bool IsFulfilled()
     {
         var collected = Progress.Instance.ApplesCollected;

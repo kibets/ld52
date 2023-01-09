@@ -50,13 +50,13 @@ public class TreeBranch : MonoBehaviour
         if (socket != null)
         {
             string variant;
-            if (Random.value > 0.3)
+            if (Random.value > 0.1)
             {
                 variant = "AppleJoint";
             }
             else
             {
-                variant = "AppleJointRock";
+                variant = "AppleJointPurple";
                 // variant = Random.value > 0.5 ? "AppleJointRock" : "AppleJointSpikes";
             }
 

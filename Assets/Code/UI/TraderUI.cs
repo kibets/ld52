@@ -85,8 +85,6 @@ public class TraderUI : MonoBehaviour
         
         confirmButton.gameObject.SetActive(false);
         
-        Progress.Instance.CompleteOrder();
-        
         _accepting = true;
         
         _acceptRoutine = StartCoroutine(AcceptRoutine());
@@ -94,9 +92,22 @@ public class TraderUI : MonoBehaviour
 
     private IEnumerator AcceptRoutine()
     {
+        var rewardFn = Progress.Instance.CurrentOrder.RewardFn;
+
+        Progress.Instance.CompleteOrder();
+
         mainText.SetText("Good....");
 
         yield return new WaitForSeconds(3f);
+
+        if (rewardFn != null)
+        {
+            mainText.SetText("Your reward!");
+            yield return new WaitForSeconds(1f);
+            rewardFn?.Invoke();
+            
+            yield return new WaitForSeconds(2f);
+        }
 
         if (Progress.Instance.HasMoreOrders())
         {

@@ -11,6 +11,7 @@ TagManager:
   - Hero
   - ArrowReflector
   - Enemy
+  - Key
   layers:
   - Default
   - TransparentFX
@@ -25,8 +26,8 @@ TagManager:
   - ArrowReflector
   - Enemy
   - TraderTrigger
-  - 
-  - 
+  - DoorTrigger
+  - Key
   - 
   - 
   - 
