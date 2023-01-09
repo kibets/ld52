@@ -18,7 +18,9 @@ public class Progress : Singleton<Progress>
         {
             Order = new Dictionary<string, int>()
             {
-                ["green"] = 2
+                ["green"] = 1,
+                
+                // ["pink"] = 5
             },
             RewardFn = () =>
             {
@@ -30,8 +32,10 @@ public class Progress : Singleton<Progress>
         {
             Order = new Dictionary<string, int>()
             {
-                ["red"] = 2,
-                ["green"] = 2,
+                ["green"] = 1,
+
+                // ["pink"] = 10,
+                // ["green"] = 10,
             },
             RewardFn = () =>
             {
@@ -43,13 +47,26 @@ public class Progress : Singleton<Progress>
         {
             Order = new Dictionary<string, int>()
             {
-                ["green"] = 2,
-                ["orange"] = 2,
+                ["green"] = 1,
+                
+                // ["pink"] = 10,
+                // ["red"] = 10,
+            },
+            RewardFn = () =>
+            {
+                Progress.Instance.AppleSpawnSpeedMod *= 2f;
+            }
+        },
+        new ApplesOrder
+        {
+            Order = new Dictionary<string, int>()
+            {
+                ["purple"] = 10,
+                ["green"] = 20,
             },
             RewardFn = () =>
             {
                 Hero.Instance.AddKey("KeyPurple");
-                Progress.Instance.AppleSpawnSpeedMod *= 2f;
             }
         },
     };
