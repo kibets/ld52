@@ -12,6 +12,7 @@ TagManager:
   - ArrowReflector
   - Enemy
   - Key
+  - Spikes
   layers:
   - Default
   - TransparentFX
@@ -28,7 +29,7 @@ TagManager:
   - TraderTrigger
   - DoorTrigger
   - Key
-  - 
+  - Spikes
   - 
   - 
   - 

@@ -173,7 +173,7 @@ public class Apple : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag("Floor") && !_touchedFloor)
+        if (Checks.IsGround(collision.collider) && !_touchedFloor)
         {
             _touchedFloor = true;
             _floorTimer = floorTime;

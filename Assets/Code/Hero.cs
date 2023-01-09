@@ -36,6 +36,7 @@ public class Hero : Singleton<Hero>
     private bool _doJump;
     private bool _animMoving;
     private bool _lookingRight;
+    private bool _blinking;
 
     public Key Key { get; private set; }
     public bool ShootingDisabled { get; set; }
@@ -44,7 +45,7 @@ public class Hero : Singleton<Hero>
     {
         _rig = GetComponent<Rigidbody>();
         
-        _floorMask = LayerMask.GetMask("Floor", "Apple");
+        _floorMask = LayerMask.GetMask("Floor", "Apple", "Enemy", "Spikes");
     }
 
     void Update()
@@ -228,6 +229,35 @@ public class Hero : Singleton<Hero>
 
     public void Bite()
     {
+        if (_blinking) return;
+
+        StartCoroutine(BlinkRoutine());
+
         // transform.DOScale(Vector3.one * 0.1f, 0.23f);
+    }
+    
+    private IEnumerator BlinkRoutine()
+    {
+        _blinking = true;
+        
+        var renderers = GetComponentsInChildren<MeshRenderer>();
+
+        for (int i = 0; i < 14; i++)
+        {
+            foreach (var rend in renderers)
+            {
+                if (rend != null) rend.enabled = false;
+            }
+            yield return new WaitForSeconds(0.07f);
+
+            foreach (var rend in renderers)
+            {
+                if (rend != null) rend.enabled = true;
+            }
+                
+            yield return new WaitForSeconds(0.07f);
+        }
+
+        _blinking = false;
     }
 }

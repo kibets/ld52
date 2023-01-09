@@ -48,7 +48,7 @@ public class Arrow : MonoBehaviour
     {
         _collided = true;
 
-        if (collision.collider.CompareTag("Floor") && !_touchedFloor && !_sticked)
+        if (Checks.IsGround(collision.collider) && !_touchedFloor && !_sticked)
         {
             _touchedFloor = true;
             

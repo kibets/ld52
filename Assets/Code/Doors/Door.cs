@@ -6,9 +6,15 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
+    [SerializeField] private Transform container;
     [SerializeField] private string keyCode;
     [SerializeField] private Transform keyHole;
     private bool _opened;
+
+    private void Start()
+    {
+        // OpenDoor();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -27,6 +33,6 @@ public class Door : MonoBehaviour
 
     private void OpenDoor()
     {
-        transform.DOMoveY(50f, 0.42f).SetEase(Ease.InOutSine).SetDelay(0.7f);
+        container.transform.DOLocalMoveY(15f, 1.17f).SetEase(Ease.InOutSine).SetDelay(0.7f);
     }
 }
