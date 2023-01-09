@@ -22,13 +22,13 @@ public class LevelUI : Singleton<LevelUI>
 
         if (currentOrder == null)
         {
-            submitButton.gameObject.SetActive(false);
+            // submitButton.gameObject.SetActive(false);
             
             applesCount.SetText("No Orders!");
         }
         else
         {
-            submitButton.interactable = currentOrder.IsFulfilled();
+            // submitButton.interactable = currentOrder.IsFulfilled();
             
             var result = "Apples:";
 

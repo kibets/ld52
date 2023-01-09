@@ -12,23 +12,23 @@ public class Progress : Singleton<Progress>
         {
             Order = new Dictionary<string, int>()
             {
-                ["red"] = 10
+                ["red"] = 2
             }
         },
         new ApplesOrder
         {
             Order = new Dictionary<string, int>()
             {
-                ["red"] = 10,
-                ["green"] = 10,
+                ["red"] = 2,
+                ["green"] = 2,
             }
         },
         new ApplesOrder
         {
             Order = new Dictionary<string, int>()
             {
-                ["green"] = 20,
-                ["orange"] = 10,
+                ["green"] = 2,
+                ["orange"] = 2,
             }
         }
     };
@@ -74,6 +74,11 @@ public class Progress : Singleton<Progress>
         }
 
         ResetCollected();
+    }
+
+    public bool HasMoreOrders()
+    {
+        return CurrentOrders.Count > 0;
     }
 }
 

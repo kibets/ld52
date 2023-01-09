@@ -33,6 +33,7 @@ public class Hero : Singleton<Hero>
     private bool _doJump;
     private bool _animMoving;
     private bool _lookingRight;
+    public bool ShootingDisabled { get; set; }
 
     private void Awake()
     {
@@ -110,6 +111,8 @@ public class Hero : Singleton<Hero>
 
     private void UpdateFireInput()
     {
+        if (ShootingDisabled) return;
+
         if (Input.GetButton("Fire1"))
         {
             var springPos = bow.HoldTrigger();
@@ -207,4 +210,5 @@ public class Hero : Singleton<Hero>
             
         }
     }
+
 }
