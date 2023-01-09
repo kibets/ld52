@@ -233,10 +233,10 @@ public class Hero : Singleton<Hero>
     {
         Key = Prefabs.Instance.Produce<Key>(keyCode);
         Key.transform.SetParent(keyHolder);
-        Key.transform.position = Trader.Instance.transform.position + Vector3.right * 3f;
+        Key.transform.position = Trader.Instance.transform.position + Vector3.up * 2f;
         Key.transform.rotation = quaternion.identity;
 
-        Key.transform.DOLocalMove(Vector3.zero, 1.91f).OnComplete(() =>
+        Key.transform.DOLocalMove(Vector3.zero, 1.31f).OnComplete(() =>
         {
             var flyingText = Prefabs.Instance.Produce<FlyingText>();
             flyingText.transform.position = transform.position + Vector3.up * 4f;
@@ -252,12 +252,12 @@ public class Hero : Singleton<Hero>
         var newBow = Prefabs.Instance.Produce<Bow>(bowCode);
         
         newBow.transform.position = Trader.Instance.transform.position + Vector3.up * 2f; // transform.position + Vector3.up * 15f;
-        newBow.transform.rotation = quaternion.identity;
+        newBow.transform.rotation = Quaternion.Euler(0f,0f,-90f);
         
-        newBow.transform.localScale = Vector3.one * 1.5f;
-        newBow.transform.DOScale(Vector3.one, 1.5f);
+        newBow.transform.localScale = Vector3.one * 2.0f;
+        newBow.transform.DOScale(Vector3.one, 1.1f);
         
-        newBow.FlyTo(oldBow.transform, 1.91f, () =>
+        newBow.FlyTo(oldBow.transform, 1.31f, () =>
         {
             Destroy(oldBow.gameObject);
             bow = newBow;

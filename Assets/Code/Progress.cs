@@ -7,6 +7,8 @@ using UnityEngine.Serialization;
 
 public class Progress : Singleton<Progress>
 {
+    public float AppleFirstStageMod = 1f;
+    
     public float AppleSpawnSpeedMod = 1f;
     public float AppleRipeSpeedMod = 1f;
     
@@ -20,12 +22,14 @@ public class Progress : Singleton<Progress>
             {
                 ["green"] = 1,
                 
-                // ["pink"] = 5
+                // ["pink"] = 6
             },
             RewardFn = () =>
             {
                 Hero.Instance.AddKey("KeyGreen");
                 Progress.Instance.AppleSpawnSpeedMod *= 2f;
+
+                Progress.Instance.AppleFirstStageMod = 1f;
             }
         },
         new ApplesOrder
@@ -87,8 +91,12 @@ public class Progress : Singleton<Progress>
     };
 
     public ApplesOrder CurrentOrder => CurrentOrders.Count > 0 ? CurrentOrders[0] : null;
-    
-    
+
+    private void Start()
+    {
+        Progress.Instance.AppleFirstStageMod = 0.2f;
+    }
+
     public void CollectApple(Apple apple)
     {
         if (!ApplesCollected.ContainsKey(apple.Stage.Name))

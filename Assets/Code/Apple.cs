@@ -56,7 +56,9 @@ public class Apple : MonoBehaviour
         {
             stage.Duration += stage.Duration * Random.value * 0.2f;
         }
-        
+
+        stages[0].Duration *= Progress.Instance.AppleFirstStageMod;
+
         _rig = GetComponent<Rigidbody>();
     }
 
