@@ -100,7 +100,6 @@ public class Progress : Singleton<Progress>
             Order = new Dictionary<string, int>()
             {
                 ["purple"] = 8,
-                ["purple"] = 8,
                 ["bomb"] = 8,
             },
             RewardFn = () =>
