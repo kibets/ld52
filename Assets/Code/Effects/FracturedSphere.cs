@@ -20,9 +20,9 @@ public class FracturedSphere : MonoBehaviour
         foreach (var mesh in _meshs)
         {
             var mat = mesh.materials[0];
-            mat.DOColor(Color.gray, "_EmissionColor", 0.34f);
-            mat.DOColor(Color.gray, "_BaseColor", 0.34f);
-            mat.DOColor(Color.gray, "_Color", 0.34f);
+            mat.DOColor(Color.gray, "_EmissionColor", 0.73f);
+            mat.DOColor(Color.gray, "_BaseColor", 0.73f);
+            mat.DOColor(Color.gray, "_Color", 0.73f);
         }
         
         Destroy(gameObject, 3.2f);
