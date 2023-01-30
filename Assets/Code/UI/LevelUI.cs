@@ -11,10 +11,16 @@ public class LevelUI : Singleton<LevelUI>
     [SerializeField] private TextMeshProUGUI applesCount;
     [SerializeField] private Button submitButton;
 
+    [SerializeField] private TextMeshProUGUI hpLabel;
 
     private void Start()
     {
         UpdateUI();
+    }
+
+    private void Update()
+    {
+        hpLabel.SetText("hp: " + Hero.Instance.Health);
     }
 
     public void UpdateUI()

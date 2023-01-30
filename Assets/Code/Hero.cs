@@ -151,9 +151,10 @@ public class Hero : Singleton<Hero>
 
     private void UpdateBowRotation()
     {
+        var source = arm.transform.position;
         var target = MousePointer.Instance.transform.position;
         
-        var angleRad = Mathf.Atan2(target.y - transform.position.y, target.x - transform.position.x);
+        var angleRad = Mathf.Atan2(target.y - source.y, target.x - source.x);
         var angleDeg = (180 / Mathf.PI) * angleRad;
 
         arm.rotation = Quaternion.Euler(0, 0, angleDeg);

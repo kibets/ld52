@@ -164,7 +164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 25
   Health: 2
-  ImpulseThreshold: 10
+  ImpulseThreshold: 6
   AgroRadius: 40
   DeAgroRadius: 50
 --- !u!1 &4705647237243071151

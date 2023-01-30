@@ -137,6 +137,23 @@ public class Apple : MonoBehaviour
             parentJoint = null;
         }
     }
+
+    private void BreakJoint()
+    {
+        if (_jointBreak) return;
+        if (parentJoint == null)
+        {
+            _jointBreak = true;
+            return;
+        }
+        
+        _jointBreak = true;
+
+        transform.SetParent(null);
+            
+        Destroy(parentJoint.gameObject);
+        parentJoint = null;
+    }
     
     private void UpdateRipeProcess()
     {
@@ -233,6 +250,7 @@ public class Apple : MonoBehaviour
 
                 if (!_touchedFloor && _hits == 2)
                 {
+                    BreakJoint();
                     //
                 }
                 
